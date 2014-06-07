@@ -23,16 +23,36 @@ We're going to make a thermometer.  But not just any thermometer!  Ours will be 
 The first task is to make the circuit, which you can see in figure~\ref{fig:circuit}.
 
 \begin{figure}
-  %\includegraphics[]{}
+  \includegraphics[width=\textwidth]{images/temperature_tmp36fritz}
   \caption{A circuit}
-  \label{fig:curcuit}
+  \label{fig:circuit}
 \end{figure}
 
 \section*{Fused}
 
+Now we need to read a temperature from using the temperature sensor in this circuit.\marginnote{Code is modified from\url{http://playground.arduino.cc/Main/LM35HigherResolution}}
+
+\begin{lstlisting}
+float tempC;
+int reading;
+int tempPin = 0;
+
+void setup() {
+  Serial.begin(9600);
+  analogReference(INTERNAL);
+}
+
+void loop() {
+  reading = analogRead(tempPin);
+  tempC = reading / 9.31;
+  Serial.println(tempC);
+  delay(2000); // wait 2 seconds
+}
+
+\end{lstlisting}
 
 \section*{Super Fused}
-Finally, and this is the big cahuna, we need to send this data up to our server.  There's a lot of work in telling such a simple device to send information through the Internet.  A code listing that achieves this can be seen in the following listing.\marginnote{This code is mostly from \url{http://playground.arduino.cc/Code/WebClient}}
+Finally, and this is the big job, we need to send this data up to our server.  There's a lot of work in telling such a simple device to send information through the Internet.  A code listing that achieves this can be seen in the following listing.\marginnote{This code is mostly from \url{http://playground.arduino.cc/Code/WebClient}}
 
 \begin{lstlisting}
   #include <SPI.h>
